@@ -1,0 +1,76 @@
+{
+  "name": "pkg-placeholder",
+  "type": "module",
+  "version": "0.0.0",
+  "packageManager": "pnpm@9.4.0",
+  "description": "_description_",
+  "author": "XiaDeYu <1579883916@qq.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/Xdy1579883916/pkg-placeholder#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Xdy1579883916/pkg-placeholder.git"
+  },
+  "bugs": "https://github.com/Xdy1579883916/pkg-placeholder/issues",
+  "keywords": [],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist/*",
+        "./dist/index.d.ts"
+      ]
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "unbuild",
+    "dev": "unbuild --stub",
+    "lint": "eslint .",
+    "prepublishOnly": "nr build",
+    "release": "bumpp && npm publish",
+    "start": "esno src/index.ts",
+    "test": "vitest",
+    "typecheck": "tsc --noEmit",
+    "prepare": "simple-git-hooks"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^3.8.0",
+    "@antfu/ni": "^0.23.0",
+    "@antfu/utils": "^0.7.10",
+    "@types/node": "latest",
+    "bumpp": "^9.7.1",
+    "eslint": "^9.13.0",
+    "esno": "^4.8.0",
+    "lint-staged": "^15.2.10",
+    "pnpm": "^9.12.2",
+    "rimraf": "^6.0.1",
+    "simple-git-hooks": "^2.11.1",
+    "typescript": "^5.6.3",
+    "unbuild": "^2.0.0",
+    "vite": "^5.4.9",
+    "vitest": "^2.1.3"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm lint-staged"
+  },
+  "lint-staged": {
+    "*": "eslint --fix"
+  }
+}
