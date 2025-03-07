@@ -1,3 +1,4 @@
+import { parse, stringify } from 'flatted'
 import { hashFunc } from './hash'
 
 export interface IHistoryOptions<T = any> {
@@ -62,18 +63,6 @@ export const defaultRule: ITransformRule = {
     ...chunks[0],
     ...(children ? { children } : {}),
   }),
-}
-
-export function safeStringify(obj: any, space?: number): string {
-  const seen = new WeakSet()
-  return JSON.stringify(obj, (key, value) => {
-    if (typeof value === 'object' && value !== null) {
-      if (seen.has(value))
-        return '[Circular]'
-      seen.add(value)
-    }
-    return value
-  }, space)
 }
 
 function noop() {
@@ -147,7 +136,7 @@ export class History<T = any> {
     const hashes: string[] = []
 
     chunks.forEach((chunk) => {
-      const chunkStr = safeStringify(chunk)
+      const chunkStr = stringify(chunk)!
       const hashKey = hashFunc(chunkStr)
       hashes.push(String(hashKey))
       this.chunks[hashKey] = chunkStr
@@ -168,7 +157,7 @@ export class History<T = any> {
 
   private record2State(record: Record<string, any>): T {
     const { hashes, ruleIndex, children } = record
-    const chunks = hashes.map(hash => JSON.parse(this.chunks[hash]))
+    const chunks = hashes.map(hash => parse(this.chunks[hash]))
     const rule = this.rules[ruleIndex] || defaultRule
 
     return rule.fromRecord({

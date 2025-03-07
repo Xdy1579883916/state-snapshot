@@ -193,6 +193,46 @@ describe('history', () => {
         }),
         fromRecord: ({ chunks, children }) => ({
           ...chunks[0],
+          data: chunks[1],
+          elements: children,
+        }),
+      },
+    ]
+
+    const history = new History({ rules })
+    history.pushSync(state)
+    expect(history.get()).toEqual(state)
+  })
+
+  it('自定义转换规则-边缘异常', () => {
+    const state = {
+      type: 'container',
+      data: undefined,
+      elements: [
+        {
+          type: 'container',
+          data: null,
+        },
+      ],
+    }
+
+    const rules = [
+      {
+        match: ({ type }) => type === 'container',
+        toRecord: (node) => {
+          const { elements, data, ...other } = node
+
+          return {
+            chunks: [
+              other,
+              data, // 当data不存在的时候会发生异常
+            ],
+            children: elements,
+          }
+        },
+        fromRecord: ({ chunks, children }) => ({
+          ...chunks[0],
+          data: chunks[1],
           elements: children,
         }),
       },
