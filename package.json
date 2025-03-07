@@ -1,7 +1,7 @@
 {
   "name": "state-snapshot",
   "type": "module",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "packageManager": "pnpm@9.4.0",
   "description": "只需将你的状态推送到 state-snapshot 中，即可实现 undo / redo 操作！",
   "author": "XiaDeYu <1579883916@qq.com>",
